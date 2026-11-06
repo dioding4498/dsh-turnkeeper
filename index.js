@@ -289,7 +289,7 @@ const policyPath = join(ledgerDir, 'turnkeeper.policy.json')
  */
 const POLICY_WINDOW_MS = 24 * 3_600_000
 const POLICY_BY_KIND = {
-  model: { gate: 6 },
+  model: { gate: 8 },
   retry: { retryGate: 1 },
   tool: { slowBlockMs: 30_000 },
 }

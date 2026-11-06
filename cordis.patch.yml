@@ -1,4 +1,4 @@
 - insert:
     - id: turnkeeper
-      name: '@local/dsh-turnkeeper'
+      name: 'dsh-turnkeeper'
       config: {}

@@ -7,7 +7,7 @@
  *     turn rendered in the same card language as the chat card.
  */
 window.__ModuleLoader__.load({
-  id: '@local/dsh-turnkeeper',
+  id: 'dsh-turnkeeper',
   factory(require) {
     const React = require('react')
     const h = React.createElement
