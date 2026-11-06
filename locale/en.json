@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "Turnkeeper",
+    "description": "Measures each turn's model, tool and idle time, and denies rule-breaking calls before they run: step gate, retry breaker, slow-command block."
+  }
+}
