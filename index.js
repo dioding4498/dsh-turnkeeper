@@ -39,6 +39,7 @@ const DEFAULTS = {
   stepGateMultiplier: 1.4,
   stepGateMinSamples: 5,
   stepGateWindowDays: 7,
+  stepGateWorkTurnMin: 3,
   retryGate: 2,
   slowLearnMs: 30_000,
   slowBlockMs: 60_000,
@@ -79,6 +80,7 @@ function normalizeConfig(raw) {
     stepGateMultiplier: ratio('stepGateMultiplier'),
     stepGateMinSamples: bounded('stepGateMinSamples', 1, 200),
     stepGateWindowDays: bounded('stepGateWindowDays', 1, 90),
+    stepGateWorkTurnMin: bounded('stepGateWorkTurnMin', 0, 30),
     retryGate: number('retryGate', 1),
     slowLearnMs: number('slowLearnMs', 500),
     slowBlockMs: number('slowBlockMs', 500),
@@ -130,7 +132,7 @@ async function refreshGate() {
         return Number.isFinite(stamp) && stamp >= since
       })
       .map(record => Number(record?.toolCalls) || 0)
-      .filter(count => count > 0)
+      .filter(count => count > 0 && count >= cfg.stepGateWorkTurnMin)
       .sort((a, b) => a - b)
   } catch {
     calls = []
@@ -147,7 +149,7 @@ async function refreshGate() {
 
 function gateBasis() {
   if (gateState.source !== 'dynamic') return `上限 ${gateState.gate} 次`
-  return `动态上限 ${gateState.gate} 次，依据近 ${config().stepGateWindowDays} 天 ${gateState.samples} 轮的 80 分位 ${gateState.p80} 次`
+  return `动态上限 ${gateState.gate} 次，依据近 ${config().stepGateWindowDays} 天 ${gateState.samples} 个有效工作轮（≥${config().stepGateWorkTurnMin} 次调用）的 80 分位 ${gateState.p80} 次`
 }
 
 function stateFor(store, sessionId) {

@@ -51,6 +51,7 @@ By default the gate is not a constant. Every five minutes the plugin reads the l
   "stepGateMultiplier": 1.4,
   "stepGateMinSamples": 5,
   "stepGateWindowDays": 7,
+  "stepGateWorkTurnMin": 3,
   "retryGate": 2,
   "slowLearnMs": 30000,
   "slowBlockMs": 60000,
@@ -60,6 +61,7 @@ By default the gate is not a constant. Every five minutes the plugin reads the l
 ```
 
 - `stepGateMode: "fixed"` pins the gate to `stepGate` and ignores the ledger.
+- `stepGateWorkTurnMin` (default 3) keeps quiet turns out of the percentile: a turn that only ran one or two tools says nothing about how hard a real working turn is, and letting those in drags the p80 — and the gate — down to nothing.
 - `slowLearnMs` is the learning threshold and `slowBlockMs` the blocking threshold. Keep the first below the second, or nothing is ever learned.
 - `exempt` lists tools that are neither counted nor denied.
 - `enabled: false` keeps measuring and stops guarding.
