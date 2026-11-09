@@ -1,0 +1,32 @@
+name: Publish to npm
+
+# 触发：推送 v* 标签（如 v0.4.3）。发布的是 package.json 里的 version，
+# 所以正确顺序是：先 bump 版本提交，再打 tag 推送。
+on:
+  push:
+    tags:
+      - "v*"
+  # 兜底：网页上可手动重跑（从默认分支发布当前 package.json 版本）
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write # npm Trusted Publishing(OIDC)必需，不需要任何 NPM_TOKEN
+
+jobs:
+  npm-publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          registry-url: "https://registry.npmjs.org"
+          # 未加 scope 的包走 OIDC 需要这个
+          package-json-auth-token: true
+
+      # Node 22 自带的 npm 10.x 不支持 Trusted Publishing，必须升级
+      - run: npm install --global npm@11
+
+      - run: npm publish --provenance --access public
