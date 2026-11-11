@@ -1,6 +1,6 @@
 {
   "name": "dsh-turnkeeper",
-  "version": "0.4.3",
+  "version": "0.4.4",
   "type": "module",
   "description": "Measures each turn's model, tool and idle time, writes one JSONL record per turn, and blocks runaway tool use with a dynamic step gate, a retry breaker and a slow-command block. Renders the per-turn breakdown as a card in the conversation and a ledger view beside it.",
   "main": "index.js",
