@@ -8,8 +8,11 @@ Per-turn cost meter and tool-loop guard for the DSH web GUI. Every finished turn
 
 - npm: `dsh plugin add dsh-turnkeeper`
 - source: point **Plugins → install bundle** at a checkout of this repository
+- market: search `dsh-turnkeeper` on awesome-dsh-plugin.com / the in-app market
 
-No build step, no runtime dependencies, no network calls. Node.js 22 or newer.
+No build step, no runtime dependencies, no network calls. Node.js 22 or newer (DSH ships its own runtime — you do not need Node installed for anything else).
+
+**Market-page installs need a system npm the host can run.** On a machine without Node.js the market modal will refuse with an npm-not-executable error; that is a market-channel prerequisite, not a plugin problem. Workarounds: install from the command line / assistant (`dsh plugin add dsh-turnkeeper`, uses DSH's bundled pnpm and needs nothing from your system), or install Node.js LTS once and fully restart DSH so the host re-reads PATH.
 
 ## What it measures
 
